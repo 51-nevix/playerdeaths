@@ -4,16 +4,18 @@ PLUGIN.name = "Player Deaths"
 PLUGIN.author = "Nevix AKA Zloji_Pikachu"
 PLUGIN.description = "Player deaths. If deaths >3, then charban. My first plugin."
 
-function Schema:PlayerDeath(client)
+local index = "deathCount"
+function PLUGIN:PlayerDeath(client)
     local character = client:GetCharacter()
 
     if (character) then
-        local deaths = character:GetData("deathCount", 0) + 1
+        local deaths = character:GetData(index, 0) + 1
 
         if (deaths >= 3) then
+            character:SetData(index, 0)
             character:Ban()
         else
-            character:SetData("deathCount", deaths)
+            character:SetData(index, deaths)
         end
     end
 end
